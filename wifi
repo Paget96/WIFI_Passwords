@@ -1,0 +1,70 @@
+#!/system/bin/sh
+# Copyright (C) 2015 Paget96
+#=======================================================================#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#  You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#=======================================================================#
+
+ssid="grep ssid="*" /data/misc/wifi/wpa_supplicant.conf" > dev/null
+psk="grep psk="*" /data/misc/wifi/wpa_supplicant.conf" > dev/null
+key_mgmt="grep key_mgmt="*" /data/misc/wifi/wpa_supplicant.conf" > dev/null
+
+clear
+echo ""
+echo ""
+echo "1. Show all wifi networks and their passwords"
+echo "2. Donation url"
+echo ""
+echo -n "Now choose:   "            
+read character
+case $character in 
+
+1) clear;
+echo ""
+echo "Wifi names"
+$ssid
+echo ""
+echo "wifi passwords"
+$psk
+echo ""
+echo "Security type"
+$key_mgmt
+echo ""
+echo -n " Options:
+[ Go back = 1 | Export to SD = 2 ]: "
+read option
+if [ $option -ne 1 ]; then
+	echo ""
+echo "Wifi names" > /sdcard/PASS.export
+grep ssid /data/misc/wifi/wpa_supplicant.conf >> /sdcard/PASS.export
+echo "" >> /sdcard/PASS.export
+echo "Wifi passwords" >> /sdcard/PASS.export
+grep psk /data/misc/wifi/wpa_supplicant.conf >> /sdcard/PASS.export
+echo "" >> /sdcard/PASS.export
+echo "Security type" >> /sdcard/PASS.export
+grep key_mgmt /data/misc/wifi/wpa_supplicant.conf >> /sdcard/PASS.export
+echo "Exporting finished"
+sleep 1
+PASS
+else
+ echo ""
+	PASS
+fi;;
+
+2) clear;
+echo ""
+su -c "LD_LIBRARY_PATH=/vendor/lib:/system/lib am start http://forum.xda-developers.com/donatetome.php?u=5514152"
+clear
+	PASS;;
+
+*) clear;
+echo "#Invalid Option, try again"
+sleep 1
+esac
+PASS
