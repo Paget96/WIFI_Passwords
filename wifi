@@ -15,56 +15,56 @@ ssid="grep ssid="*" /data/misc/wifi/wpa_supplicant.conf" > dev/null
 psk="grep psk="*" /data/misc/wifi/wpa_supplicant.conf" > dev/null
 key_mgmt="grep key_mgmt="*" /data/misc/wifi/wpa_supplicant.conf" > dev/null
 
-clear
-echo ""
-echo ""
-echo "1. Show all wifi networks and their passwords"
-echo "2. Donation url"
-echo ""
-echo -n "Now choose:   "            
-read character
+while true; do
+	busybox clear
+		busybox echo ""
+		busybox echo ""
+		busybox echo "1. Show all wifi networks and their passwords"
+		busybox echo "2. Donation url"
+		busybox echo ""
+		busybox echo -n "Now choose:   "            
+	read character
 case $character in 
-
-1) clear;
-echo ""
-echo "Wifi names"
-$ssid
-echo ""
-echo "wifi passwords"
-$psk
-echo ""
-echo "Security type"
-$key_mgmt
-echo ""
-echo -n " Options:
-[ Go back = 1 | Export to SD = 2 ]: "
+1)while true; do
+	busybox clear;
+		busybox echo ""
+		busybox echo "Wifi names"
+		$ssid
+		busybox echo ""
+		busybox echo "wifi passwords"
+		$psk
+		busybox echo ""
+		busybox echo "Security type"
+		$key_mgmt
+		busybox echo ""
+	busybox echo -n " Options:
+[ Export to SD = 1 | Go Back = 2 ]: "
 read option
-if [ $option -ne 1 ]; then
-	echo ""
-echo "Wifi names" > /sdcard/PASS.export
-grep ssid /data/misc/wifi/wpa_supplicant.conf >> /sdcard/PASS.export
-echo "" >> /sdcard/PASS.export
-echo "Wifi passwords" >> /sdcard/PASS.export
-grep psk /data/misc/wifi/wpa_supplicant.conf >> /sdcard/PASS.export
-echo "" >> /sdcard/PASS.export
-echo "Security type" >> /sdcard/PASS.export
-grep key_mgmt /data/misc/wifi/wpa_supplicant.conf >> /sdcard/PASS.export
-echo "Exporting finished"
-sleep 1
-PASS
-else
- echo ""
-	PASS
-fi;;
-
-2) clear;
-echo ""
+if [ $option -eq 1 ]; then
+	busybox echo ""
+	busybox echo "Wifi names" > /sdcard/PASS.export
+		busybox grep ssid /data/misc/wifi/wpa_supplicant.conf >> /sdcard/PASS.export
+	busybox echo "" >> /sdcard/PASS.export
+	busybox echo "Wifi passwords" >> /sdcard/PASS.export
+		busybox grep psk /data/misc/wifi/wpa_supplicant.conf >> /sdcard/PASS.export
+	busybox echo "" >> /sdcard/PASS.export
+	busybox echo "Security type" >> /sdcard/PASS.export
+		busybox grep key_mgmt /data/misc/wifi/wpa_supplicant.conf >> /sdcard/PASS.export
+	busybox echo "Exporting finished"
+		busybox sleep 1
+			break
+	else
+		break
+	fi
+done;;
+2)while true; do
+busybox clear;
 su -c "LD_LIBRARY_PATH=/vendor/lib:/system/lib am start http://forum.xda-developers.com/donatetome.php?u=5514152"
-clear
-	PASS;;
-
-*) clear;
-echo "#Invalid Option, try again"
-sleep 1
+busybox clear
+break
+done;;
+*)busybox clear;
+busybox echo "#Invalid Option, please try again"
+busybox sleep 2
 esac
-PASS
+done
