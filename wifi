@@ -18,9 +18,13 @@ key_mgmt="grep key_mgmt="*" /data/misc/wifi/wpa_supplicant.conf" > dev/null
 while true; do
 	busybox clear
 		busybox echo ""
-		busybox echo ""
+		busybox echo "You want to see your wifi saved passwords?"
+		busybox echo "Oh really?"
+		busybox echo "Well..."
+		busybox echo "Now you can!!!"
 		busybox echo "1. Show all wifi networks and their passwords"
 		busybox echo "2. Donation url"
+		busybox echo "3. XDA Thread"
 		busybox echo ""
 		busybox echo -n "Now choose:   "            
 	read character
@@ -60,6 +64,17 @@ done;;
 2)while true; do
 busybox clear;
 su -c "LD_LIBRARY_PATH=/vendor/lib:/system/lib am start http://forum.xda-developers.com/donatetome.php?u=5514152"
+busybox clear
+break
+done;;
+*)busybox clear;
+busybox echo "#Invalid Option, please try again"
+busybox sleep 2
+esac
+done;;
+3)while true; do
+busybox clear;
+su -c "LD_LIBRARY_PATH=/vendor/lib:/system/lib am start http://forum.xda-developers.com/android/software-hacking/tool-wifikey-v1-0-t3228763"
 busybox clear
 break
 done;;
